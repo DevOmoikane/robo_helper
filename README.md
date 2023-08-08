@@ -8,6 +8,10 @@ This is an implementation of ROS2 for a robot helper, the idea is to make a robo
 
 ```docker compose up --build```
 
+### execute only robot container
+
+```docker compose up robot --build```
+
 ### execute a bash in the main container
 
 ```docker compose exec robot bash```

@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  robot:
+    build:
+      context: .
+      dockerfile: humble.Dockerfile
+    container_name: robot
+    network_mode: "host"
+    privileged: true
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+      # - XAUTHORITY=/tmp/.Xauthority
+    volumes:
+      - .:/ws_bot
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # - XAUTHORITY=/tmp/.Xauthority
+    stdin_open: true
+    tty: true
+    entrypoint: /ros_entrypoint.sh
+    command: ros2 run rviz2 rviz2
+  # rviz:
+  #   build:
+  #     context: .
+  #     dockerfile: humble.Dockerfile
+  #   container_name: rviz
+  #   network_mode: "host"
+  #   privileged: true
+  #   volumes:
+  #   - .:/ws_bot
+  #   - /tmp/.X11-unix:/tmp/.X11-unix:rw
+  #   environment:
+  #     - DISPLAY=$DISPLAY
+  #     - QT_X11_NO_MITSHM=1
+  #     - ROS_IP=robot
+  #   entrypoint: /ros_entrypoint.sh
+  #   command: ros2 run rviz2 rviz2
+  gazebo:
+    build:
+      context: .
+      dockerfile: gazebo.Dockerfile
+    container_name: gazebo
+    network_mode: "host"
+    privileged: true
+    devices:
+      - /dev/snd:/dev/snd  # Add audio devices
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+      # - XAUTHORITY=/tmp/.Xauthority
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # - XAUTHORITY=/tmp/.Xauthority
+      - ${XDG_RUNTIME_DIR}/pulse:${XDG_RUNTIME_DIR}/pulse
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: /ros_entrypoint.sh
+    command: gazebo

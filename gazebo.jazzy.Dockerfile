@@ -1,6 +1,6 @@
-FROM osrf/ros:humble-desktop
+FROM osrf/ros:jazzy-desktop
 RUN apt-get update && apt-get install -y \
-    ros-humble-gazebo-ros-pkgs \
+    ros-jazzy-ros-gz \
     libxcb-icccm4 \
     libxcb-image0 \
     libxcb-keysyms1 \
@@ -11,13 +11,5 @@ RUN apt-get update && apt-get install -y \
     pulseaudio \
     && rm -rf /var/lib/apt/lists/*
 
-ARG USERNAME=israel
-ARG UID=1000
-ARG GID=1000
-
-RUN groupadd -g $GID $USERNAME
-RUN useradd -m -u $UID -g $GID -s /bin/bash $USERNAME
-USER $USERNAME
-
 ENTRYPOINT ["/ros_entrypoint.sh"]
-CMD ["gazebo"]
+CMD ["gz", "sim"]

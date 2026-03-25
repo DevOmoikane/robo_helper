@@ -1,4 +1,4 @@
-FROM osrf/ros:jazzy-desktop
+FROM osrf/ros:jazzy-desktop-full
 RUN apt-get update && apt-get install -y \
     libxcb-icccm4 \
     libxcb-image0 \

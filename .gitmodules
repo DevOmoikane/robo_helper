@@ -1,0 +1,6 @@
+[submodule "freecad.robotcad"]
+	path = freecad.robotcad
+	url = https://github.com/drfenixion/freecad.robotcad.git
+[submodule "freecad.cross"]
+	path = freecad.cross
+	url = https://github.com/galou/freecad.cross.git
